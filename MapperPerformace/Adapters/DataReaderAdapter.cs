@@ -14,7 +14,7 @@ namespace MapperPerformace.Adapters
         private SqlConnection connection;
 
         public string Name
-        { 
+        {
             get
             {
                 return "Date Reader";
@@ -55,7 +55,7 @@ namespace MapperPerformace.Adapters
             List<PersonInfoDto> results = new List<PersonInfoDto>();
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                while(reader.Read())
+                while (reader.Read())
                 {
                     PersonInfoDto personInfo = new PersonInfoDto();
                     personInfo.BusinessEntityID = Convert.ToInt32(reader["BusinessEntityID"]);
@@ -73,32 +73,32 @@ namespace MapperPerformace.Adapters
             return results;
         }
 
-        private string MapToString(SqlDataReader reader, string name)
-        {
-            object r = reader[name];
-            if(r == DBNull.Value)
-            {
-                return null;
-            }
-
-            return (string)r;
-        }
-
-        private DateTime? MapToDateTime(SqlDataReader reader, string name)
-        {
-            object r = reader[name];
-            if (r == DBNull.Value)
-            {
-                return null;
-            }
-
-            return (DateTime)r;
-        }
-
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);
             this.connection.Open();
+        }
+
+        private string MapToString(SqlDataReader reader, string name)
+        {
+            object value = reader[name];
+            if (value == DBNull.Value)
+            {
+                return null;
+            }
+
+            return (string)value;
+        }
+
+        private DateTime? MapToDateTime(SqlDataReader reader, string name)
+        {
+            object value = reader[name];
+            if (value == DBNull.Value)
+            {
+                return null;
+            }
+
+            return (DateTime)value;
         }
     }
 }

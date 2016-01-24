@@ -15,13 +15,14 @@ namespace MapperPerformace.Testing
         {
             if (adapters == null) throw new ArgumentNullException(nameof(adapters));
 
-            this.adapters = adapters.OrderBy(t=>t.Name);
+            this.adapters = adapters.OrderBy(t => t.Name);
         }
 
         public void TestGetAllPersons(int count = 10)
         {
-            foreach(IAdapter adapter in this.adapters)
+            foreach (IAdapter adapter in this.adapters)
             {
+                GC.Collect();
                 this.TestGetAllPersons(adapter, count);
             }
 
@@ -34,13 +35,18 @@ namespace MapperPerformace.Testing
             adapter.Prepare();
             Stopwatch stp = new Stopwatch();
             stp.Start();
-            for(int i=0; i< count; i++)
+            for (int i = 0; i < count; i++)
             {
                 List<PersonInfoDto> infos = adapter.GetAllPersons();
                 mcount += infos.Count;
             }
             stp.Stop();
-            Console.WriteLine("{0,-30} - {1,6} ms ({2})", adapter.Name, stp.ElapsedMilliseconds, mcount);
+
+            Console.WriteLine("{0,-30} - {1,6} ms ({2}) {3,6} us",
+                adapter.Name,
+                stp.ElapsedMilliseconds,
+                mcount,
+                Math.Round( 1000.0 * stp.Elapsed.TotalMilliseconds / mcount, 4));
 
             adapter.Relase();
         }
