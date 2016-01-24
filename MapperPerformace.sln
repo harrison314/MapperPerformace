@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapperPerformace", "MapperPerformace\MapperPerformace.csproj", "{ED685AC9-8261-4327-B318-5A3BA0084B5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B16476C2-1F5A-48FA-A407-DC03C07A85C9}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED685AC9-8261-4327-B318-5A3BA0084B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED685AC9-8261-4327-B318-5A3BA0084B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED685AC9-8261-4327-B318-5A3BA0084B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED685AC9-8261-4327-B318-5A3BA0084B5D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

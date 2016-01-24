@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ED685AC9-8261-4327-B318-5A3BA0084B5D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapperPerformace</RootNamespace>
+    <AssemblyName>MapperPerformace</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.EF6, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.EF6.0.2.0\lib\net45\AutoMapper.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DelegateDecompiler, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93b26a10a04705bd, processorArchitecture=MSIL">
+      <HintPath>..\packages\DelegateDecompiler.0.17.0\lib\net40-Client\DelegateDecompiler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DelegateDecompiler.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93b26a10a04705bd, processorArchitecture=MSIL">
+      <HintPath>..\packages\DelegateDecompiler.EntityFramework.0.17.0\lib\net45\DelegateDecompiler.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Reflection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Reflection.1.0.0.0\lib\Mono.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=3.1.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.1.2\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adapters\AutoMapperAdapter.cs" />
+    <Compile Include="Adapters\DapperAdapter.cs" />
+    <Compile Include="Adapters\DataReaderAdapter.cs" />
+    <Compile Include="Adapters\VanilaEfAdapter.cs" />
+    <Compile Include="Ef\Address.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\AddressType.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\AdventureWorks2014.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdventureWorks2014.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\AdventureWorks2014.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\AdventureWorks2014.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdventureWorks2014.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\AWBuildVersion.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\BillOfMaterial.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\BusinessEntity.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\BusinessEntityAddress.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\BusinessEntityContact.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ContactType.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\CountryRegion.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\CountryRegionCurrency.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\CreditCard.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Culture.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Currency.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\CurrencyRate.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Customer.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\DatabaseLog.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Department.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\EmailAddress.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Employee.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\EmployeeDepartmentHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\EmployeePayHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ErrorLog.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\HrStats_Result.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Illustration.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\JobCandidate.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Location.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Password.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Person.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\PersonCreditCard.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\PersonPhone.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\PhoneNumberType.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Product.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductCategory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductCostHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductDescription.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductDocument.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductInventory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductListPriceHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductModel.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductModelIllustration.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductModelProductDescriptionCulture.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductPhoto.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductProductPhoto.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductReview.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductSubcategory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ProductVendor.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\PurchaseOrderDetail.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\PurchaseOrderHeader.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesOrderDetail.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesOrderHeader.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesOrderHeaderSalesReason.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesPerson.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesPersonQuotaHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesReason.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesTaxRate.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesTerritory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SalesTerritoryHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ScrapReason.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Shift.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ShipMethod.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ShoppingCartItem.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SpecialOffer.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\SpecialOfferProduct.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\StateProvince.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Store.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\TransactionHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\TransactionHistoryArchive.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\ufnGetContactInformation_Result.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\UnitMeasure.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\uspGetBillOfMaterials_Result.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\uspGetEmployeeManagers_Result.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\uspGetManagerEmployees_Result.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\uspGetWhereUsedProductID_Result.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vAdditionalContactInfo.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vEmployee.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vEmployeeDepartment.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vEmployeeDepartmentHistory.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\Vendor.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vIndividualCustomer.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vJobCandidate.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vJobCandidateEducation.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vJobCandidateEmployment.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vPersonDemographic.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vProductAndDescription.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vProductModelCatalogDescription.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vProductModelInstruction.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vSalesPerson.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vSalesPersonSalesByFiscalYear.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vStateProvinceCountryRegion.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vStoreWithAddress.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vStoreWithContact.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vStoreWithDemographic.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vVendorWithAddress.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\vVendorWithContact.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\WorkOrder.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ef\WorkOrderRouting.cs">
+      <DependentUpon>AdventureWorks2014.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\IAdapter.cs" />
+    <Compile Include="Testing\PersonInfoDto.cs" />
+    <Compile Include="Testing\Settings.cs" />
+    <Compile Include="Testing\Tester.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Ef\AdventureWorks2014.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AdventureWorks2014.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Ef\AdventureWorks2014.edmx.diagram">
+      <DependentUpon>AdventureWorks2014.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ef\AdventureWorks2014.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdventureWorks2014.edmx</DependentUpon>
+      <LastGenOutput>AdventureWorks2014.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Ef\AdventureWorks2014.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdventureWorks2014.edmx</DependentUpon>
+      <LastGenOutput>AdventureWorks2014.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
