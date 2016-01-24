@@ -101,4 +101,46 @@ namespace MapperPerformace.Adapters
             return (DateTime)value;
         }
     }
+
+
+    /// <summary>
+    /// Sql Data Reader Helper
+    /// </summary>
+    /// <remarks>
+    /// From https://github.com/StackExchange/dapper-dot-net/blob/4f3a04cfaabfa3a6e1cd64e23fbbcbaf63d74a8c/Dapper.Tests/PerformanceTests.cs
+    /// </remarks>
+    static class SqlDataReaderHelper
+    {
+        public static string GetNullableString(this SqlDataReader reader, int index)
+        {
+            object tmp = reader.GetValue(index);
+            if (tmp != DBNull.Value)
+            {
+                return (string)tmp;
+            }
+            return null;
+        }
+
+        public static Nullable<T> GetNullableValue<T>(this SqlDataReader reader, int index) where T : struct
+        {
+            object tmp = reader.GetValue(index);
+            if (tmp != DBNull.Value)
+            {
+                return (T)tmp;
+            }
+
+            return null;
+        }
+
+        public static Nullable<T> GetNullableValue<T>(this SqlDataReader reader, string name) where T : struct
+        {
+            object tmp = reader[name];
+            if (tmp != DBNull.Value)
+            {
+                return (T)tmp;
+            }
+
+            return null;
+        }
+    }
 }

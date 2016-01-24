@@ -20,9 +20,9 @@ namespace MapperPerformace
             Console.WriteLine("------------------------------------");
             Console.WriteLine();
 
-            container.GetInstance<Tester>().TestGetAllPersons(50);
-            container.GetInstance<Tester>().TestGetAllPersons(50);
-            container.GetInstance<Tester>().TestGetAllPersons(50);
+            container.GetInstance<Tester>().TestGetAllPersons(20);
+            container.GetInstance<Tester>().TestGetAllPersons(20);
+            container.GetInstance<Tester>().TestGetAllPersons(20);
 
             container.Dispose();
             Console.WriteLine();

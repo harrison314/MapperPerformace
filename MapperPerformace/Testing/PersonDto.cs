@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace MapperPerformace.Testing
 {
-    /// <summary>
-    /// POCO class for short personal informations.
-    /// </summary>
-    public class PersonInfoDto
+    public class PersonDto
     {
         public int BusinessEntityID
         {
@@ -35,6 +32,12 @@ namespace MapperPerformace.Testing
             set;
         }
 
+        public string MiddleName
+        {
+            get;
+            set;
+        }
+
         public string LastName
         {
             get;
@@ -53,7 +56,19 @@ namespace MapperPerformace.Testing
             set;
         }
 
-        public PersonInfoDto()
+        public List<string> TelephoneNumbers
+        {
+            get;
+            set;
+        }
+
+        public List<EmailDto> Emails
+        {
+            get;
+            set;
+        }
+
+        public PersonDto()
         {
 
         }

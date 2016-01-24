@@ -23,7 +23,13 @@ namespace MapperPerformace.Adapters
 
         static AutoMapperAdapter()
         {
-            Mapper.CreateMap<Person, PersonInfoDto>();
+            Mapper.CreateMap<Person, PersonInfoDto>(MemberList.Destination)
+                .ForMember(t => t.EmployeeBrithDate, t => t.MapFrom(src => src.Employee.BirthDate));
+            Mapper.CreateMap<EmailAddress, EmailDto>(MemberList.Destination)
+                .ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
+
+
+            Mapper.AssertConfigurationIsValid();
         }
 
         public AutoMapperAdapter()
