@@ -73,6 +73,49 @@ namespace MapperPerformace.Adapters
             return results;
         }
 
+        public List<PersonInfoDto> GetPaggedPersons(int skip, int take)
+        {
+            string sql = @"SELECT p.[BusinessEntityID]
+      ,[PersonType]
+      ,[Title]
+      ,[FirstName]
+      ,[LastName]
+	  ,e.[BirthDate] AS [EmployeeBrithDate]
+	  ,e.[Gender] AS [EmployeeGender]
+  FROM [AdventureWorks2014].[Person].[Person] p
+  LEFT JOIN [AdventureWorks2014].[HumanResources].[Employee] e 
+  ON p.[BusinessEntityID] = e.[BusinessEntityID]
+  ORDER BY p.[ModifiedDate]
+  OFFSET (@Skip) ROWS FETCH NEXT (@Take) ROWS ONLY;";
+
+            SqlCommand cmd = this.connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.Parameters.AddWithValue("@Skip", skip);
+            cmd.Parameters.AddWithValue("@Take", take);
+
+            List<PersonInfoDto> results = new List<PersonInfoDto>(take);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    PersonInfoDto personInfo = new PersonInfoDto();
+                    personInfo.BusinessEntityID = Convert.ToInt32(reader["BusinessEntityID"]);
+                    personInfo.EmployeeBrithDate = this.MapToDateTime(reader, "EmployeeBrithDate");
+                    personInfo.EmployeeGender = this.MapToString(reader, "EmployeeGender");
+                    personInfo.FirstName = this.MapToString(reader, "FirstName");
+                    personInfo.LastName = this.MapToString(reader, "LastName");
+                    personInfo.PersonType = this.MapToString(reader, "PersonType");
+                    personInfo.Title = this.MapToString(reader, "Title");
+
+                    results.Add(personInfo);
+                }
+            }
+
+            return results;
+        }
+
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);

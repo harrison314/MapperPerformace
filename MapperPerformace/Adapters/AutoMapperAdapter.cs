@@ -27,9 +27,6 @@ namespace MapperPerformace.Adapters
                 .ForMember(t => t.EmployeeBrithDate, t => t.MapFrom(src => src.Employee.BirthDate));
             Mapper.CreateMap<EmailAddress, EmailDto>(MemberList.Destination)
                 .ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
-
-
-            Mapper.AssertConfigurationIsValid();
         }
 
         public AutoMapperAdapter()
@@ -45,6 +42,15 @@ namespace MapperPerformace.Adapters
         public List<PersonInfoDto> GetAllPersons()
         {
             List<PersonInfoDto> rezult = this.dbContext.People.OrderBy(t => t.ModifiedDate)
+                .ProjectToList<PersonInfoDto>();
+
+            return rezult;
+        }
+
+        public List<PersonInfoDto> GetPaggedPersons(int skip, int take)
+        {
+            List<PersonInfoDto> rezult = this.dbContext.People.OrderBy(t => t.ModifiedDate)
+                .Skip(skip).Take(take)
                 .ProjectToList<PersonInfoDto>();
 
             return rezult;

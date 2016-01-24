@@ -54,6 +54,28 @@ namespace MapperPerformace.Adapters
             return projection.ToList();
         }
 
+        public List<PersonInfoDto> GetPaggedPersons(int skip, int take)
+        {
+            string sql = @"SELECT p.[BusinessEntityID]
+      ,[PersonType]
+      ,[Title]
+      ,[FirstName]
+      ,[LastName]
+	  ,e.[BirthDate] AS [EmployeeBrithDate]
+	  ,e.[Gender] AS [EmployeeGender]
+  FROM [AdventureWorks2014].[Person].[Person] p
+  LEFT JOIN [AdventureWorks2014].[HumanResources].[Employee] e 
+  ON p.[BusinessEntityID] = e.[BusinessEntityID]
+  ORDER BY p.[ModifiedDate]
+  OFFSET (@Skip) ROWS FETCH NEXT (@Take) ROWS ONLY;";
+
+
+            IEnumerable<PersonInfoDto> projection = this.connection.Query<PersonInfoDto>(sql,
+                new { Skip = skip, Take = take });
+            return projection.ToList();
+
+        }
+
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);

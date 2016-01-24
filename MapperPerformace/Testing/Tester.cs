@@ -20,10 +20,23 @@ namespace MapperPerformace.Testing
 
         public void TestGetAllPersons(int count = 10)
         {
+            Console.WriteLine("GetAllPersons");
             foreach (IAdapter adapter in this.adapters)
             {
                 GC.Collect();
                 this.TestGetAllPersons(adapter, count);
+            }
+
+            Console.WriteLine();
+        }
+
+        public void TestGetPaggedPersons(int count = 10)
+        {
+            Console.WriteLine("GetAllPersons");
+            foreach (IAdapter adapter in this.adapters)
+            {
+                GC.Collect();
+                this.TestGetPaggedPersons(adapter, count);
             }
 
             Console.WriteLine();
@@ -46,7 +59,30 @@ namespace MapperPerformace.Testing
                 adapter.Name,
                 stp.ElapsedMilliseconds,
                 mcount,
-                Math.Round( 1000.0 * stp.Elapsed.TotalMilliseconds / mcount, 4));
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / mcount, 4));
+
+            adapter.Relase();
+        }
+
+
+        private void TestGetPaggedPersons(IAdapter adapter, int count)
+        {
+            long mcount = 0L;
+            adapter.Prepare();
+            Stopwatch stp = new Stopwatch();
+            stp.Start();
+            for (int i = 0; i < count; i++)
+            {
+                List<PersonInfoDto> infos = adapter.GetPaggedPersons((count * 10) % 10000, 20);
+                mcount += infos.Count;
+            }
+            stp.Stop();
+
+            Console.WriteLine("{0,-30} - {1,6} ms ({2}) {3,6} us",
+                adapter.Name,
+                stp.ElapsedMilliseconds,
+                mcount,
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / mcount, 4));
 
             adapter.Relase();
         }

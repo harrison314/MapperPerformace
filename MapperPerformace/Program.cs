@@ -16,13 +16,22 @@ namespace MapperPerformace
             Container container = Bootstrap();
 
             container.GetInstance<Tester>().TestGetAllPersons(2);
+            container.GetInstance<Tester>().TestGetPaggedPersons(2);
+
 
             Console.WriteLine("------------------------------------");
             Console.WriteLine();
 
+            /*
             container.GetInstance<Tester>().TestGetAllPersons(20);
             container.GetInstance<Tester>().TestGetAllPersons(20);
             container.GetInstance<Tester>().TestGetAllPersons(20);
+            */
+
+            container.GetInstance<Tester>().TestGetPaggedPersons(40);
+            container.GetInstance<Tester>().TestGetPaggedPersons(40);
+            container.GetInstance<Tester>().TestGetPaggedPersons(40);
+            container.GetInstance<Tester>().TestGetPaggedPersons(40);
 
             container.Dispose();
             Console.WriteLine();
@@ -41,6 +50,7 @@ namespace MapperPerformace
             container.Register<Tester>(Lifestyle.Transient);
 
             container.Verify();
+            AutoMapper.Mapper.AssertConfigurationIsValid();
 
             return container;
         }

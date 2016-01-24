@@ -38,5 +38,7 @@ namespace MapperPerformace.Testing
         /// <returns></returns>
         List<PersonInfoDto> GetAllPersons();
 
+        List<PersonInfoDto> GetPaggedPersons(int skip, int take);
+
     }
 }
