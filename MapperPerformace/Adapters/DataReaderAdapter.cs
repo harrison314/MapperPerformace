@@ -14,7 +14,7 @@ namespace MapperPerformace.Adapters
         private SqlConnection connection;
 
         public string Name
-        {
+        { 
             get
             {
                 return "Date Reader";
