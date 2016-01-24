@@ -38,7 +38,20 @@ namespace MapperPerformace.Testing
         /// <returns></returns>
         List<PersonInfoDto> GetAllPersons();
 
+        /// <summary>
+        /// Gets the pagged persons.
+        /// </summary>
+        /// <param name="skip">The skip.</param>
+        /// <param name="take">The take.</param>
+        /// <returns></returns>
         List<PersonInfoDto> GetPaggedPersons(int skip, int take);
+
+        // TODO: Pridat select cez Id, na 
+        //       - objekt s dovama kolekciami entit
+        //       - jednoduchy objekt podla id
+        //       - jednoduchy ojekt s vnorenym objektom
+        //       - Select N+1 problem
+        // http://stackoverflow.com/questions/20492071/simple-inner-join-result-with-dapper
 
     }
 }

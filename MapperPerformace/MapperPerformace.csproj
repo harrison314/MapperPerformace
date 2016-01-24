@@ -86,6 +86,7 @@
     <Compile Include="Adapters\AutoMapperAdapter.cs" />
     <Compile Include="Adapters\DapperAdapter.cs" />
     <Compile Include="Adapters\DataReaderAdapter.cs" />
+    <Compile Include="Adapters\UofEfAdapter.cs" />
     <Compile Include="Adapters\VanilaEfAdapter.cs" />
     <Compile Include="Ef\Address.cs">
       <DependentUpon>AdventureWorks2014.tt</DependentUpon>
