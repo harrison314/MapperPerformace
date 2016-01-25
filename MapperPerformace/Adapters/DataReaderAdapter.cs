@@ -116,6 +116,42 @@ namespace MapperPerformace.Adapters
             return results;
         }
 
+        public ShipMethodDto GetSimple(int id)
+        {
+            string sql = @"SELECT TOP 1 [ShipMethodID]
+      ,[Name]
+      ,[ShipBase]
+      ,[ShipRate]
+      ,[rowguid]
+      ,[ModifiedDate]
+  FROM [AdventureWorks2014].[Purchasing].[ShipMethod]
+  WHERE [ShipMethodID] = @id";
+
+            SqlCommand cmd = this.connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.Parameters.AddWithValue("@id", id);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ShipMethodDto personInfo = new ShipMethodDto();
+                    personInfo.ShipMethodID = Convert.ToInt32(reader["ShipMethodID"]);
+                    personInfo.ModifiedDate = this.MapToDateTime2(reader, "ModifiedDate");
+                    personInfo.Name = this.MapToString(reader, "Name");
+                    personInfo.ShipBase = Convert.ToDecimal(reader["ShipBase"]);
+                    personInfo.ShipRate = Convert.ToDecimal(reader["ShipRate"]);
+                    personInfo.rowguid = (Guid)reader["rowguid"];
+
+                    return personInfo;
+                }
+            }
+
+            throw new ArgumentException("Not found id");
+        }
+
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);
@@ -139,6 +175,17 @@ namespace MapperPerformace.Adapters
             if (value == DBNull.Value)
             {
                 return null;
+            }
+
+            return (DateTime)value;
+        }
+
+        private DateTime MapToDateTime2(SqlDataReader reader, string name)
+        {
+            object value = reader[name];
+            if (value == DBNull.Value)
+            {
+                throw new ArgumentException(name);
             }
 
             return (DateTime)value;

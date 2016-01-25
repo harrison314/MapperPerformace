@@ -77,9 +77,31 @@ namespace MapperPerformace.Adapters
             }
         }
 
+        public ShipMethodDto GetSimple(int id)
+        {
+            using (AdventureWorks2014Entities dbContext = new AdventureWorks2014Entities())
+            {
+                ShipMethod shipMethodEf = dbContext.ShipMethods.Find(id);
+                if (shipMethodEf == null)
+                {
+                    throw new ArgumentException("Not found id");
+                }
+
+                ShipMethodDto shipMethodDto = new ShipMethodDto();
+                shipMethodDto.ModifiedDate = shipMethodEf.ModifiedDate;
+                shipMethodDto.Name = shipMethodEf.Name;
+                shipMethodDto.rowguid = shipMethodEf.rowguid;
+                shipMethodDto.ShipBase = shipMethodEf.ShipBase;
+                shipMethodDto.ShipMethodID = shipMethodEf.ShipMethodID;
+                shipMethodDto.ShipRate = shipMethodEf.ShipRate;
+
+                return shipMethodDto;
+            }
+        }
+
         public void Prepare()
         {
-            
+
         }
     }
 }

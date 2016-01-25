@@ -27,6 +27,7 @@ namespace MapperPerformace.Adapters
                 .ForMember(t => t.EmployeeBrithDate, t => t.MapFrom(src => src.Employee.BirthDate));
             Mapper.CreateMap<EmailAddress, EmailDto>(MemberList.Destination)
                 .ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
+            Mapper.CreateMap<ShipMethod, ShipMethodDto>(MemberList.Destination);
         }
 
         public AutoMapperAdapter()
@@ -54,6 +55,19 @@ namespace MapperPerformace.Adapters
                 .ProjectToList<PersonInfoDto>();
 
             return rezult;
+        }
+
+        public ShipMethodDto GetSimple(int id)
+        {
+            ShipMethod shipMethodEf = this.dbContext.ShipMethods.Find(id);
+            if (shipMethodEf == null)
+            {
+                throw new ArgumentException("Not found id");
+            }
+
+            ShipMethodDto shipMethodDto = Mapper.Map<ShipMethod, ShipMethodDto>(shipMethodEf);
+
+            return shipMethodDto;
         }
 
         public void Prepare()

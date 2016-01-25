@@ -28,10 +28,14 @@ namespace MapperPerformace
             container.GetInstance<Tester>().TestGetAllPersons(20);
             */
 
+            /*
             container.GetInstance<Tester>().TestGetPaggedPersons(40);
             container.GetInstance<Tester>().TestGetPaggedPersons(40);
             container.GetInstance<Tester>().TestGetPaggedPersons(40);
             container.GetInstance<Tester>().TestGetPaggedPersons(40);
+            */
+
+            container.GetInstance<Tester>().TestGetSimple(40);
 
             container.Dispose();
             Console.WriteLine();

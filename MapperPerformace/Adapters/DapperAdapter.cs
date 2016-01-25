@@ -76,6 +76,26 @@ namespace MapperPerformace.Adapters
 
         }
 
+        public ShipMethodDto GetSimple(int id)
+        {
+            string sql = @"SELECT TOP 1 [ShipMethodID]
+      ,[Name]
+      ,[ShipBase]
+      ,[ShipRate]
+      ,[rowguid]
+      ,[ModifiedDate]
+  FROM [AdventureWorks2014].[Purchasing].[ShipMethod]
+  WHERE [ShipMethodID] = @Id";
+
+            ShipMethodDto dto = this.connection.Query<ShipMethodDto>(sql, new { Id = id }).FirstOrDefault();
+            if (dto == null)
+            {
+                throw new ArgumentException("Not found id");
+            }
+
+            return dto;
+        }
+
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);

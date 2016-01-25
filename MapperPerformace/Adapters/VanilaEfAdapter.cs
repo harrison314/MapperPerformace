@@ -72,6 +72,25 @@ namespace MapperPerformace.Adapters
             return rezult;
         }
 
+        public ShipMethodDto GetSimple(int id)
+        {
+            ShipMethod shipMethodEf =  this.dbContext.ShipMethods.Find(id);
+            if(shipMethodEf == null)
+            {
+                throw new ArgumentException("Not found id");
+            }
+
+            ShipMethodDto shipMethodDto = new ShipMethodDto();
+            shipMethodDto.ModifiedDate = shipMethodEf.ModifiedDate;
+            shipMethodDto.Name = shipMethodEf.Name;
+            shipMethodDto.rowguid = shipMethodEf.rowguid;
+            shipMethodDto.ShipBase = shipMethodEf.ShipBase;
+            shipMethodDto.ShipMethodID = shipMethodEf.ShipMethodID;
+            shipMethodDto.ShipRate = shipMethodEf.ShipRate;
+
+            return shipMethodDto;
+        }
+
         public void Prepare()
         {
             this.dbContext = new AdventureWorks2014Entities();
