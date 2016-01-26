@@ -96,6 +96,81 @@ namespace MapperPerformace.Adapters
             return dto;
         }
 
+
+        public ProductDto GetProduct(int id)
+        {
+
+            string sql = @"SELECT
+       [p].[ProductID]
+      ,[p].[Name]
+      ,[p].[ProductNumber]
+      ,[p].[MakeFlag]
+      ,[p].[FinishedGoodsFlag]
+      ,[p].[Color]
+      ,[p].[SafetyStockLevel]
+      ,[p].[ReorderPoint]
+      ,[p].[StandardCost]
+      ,[p].[ListPrice]
+      ,[p].[Size]
+      ,[p].[SizeUnitMeasureCode]
+      ,[p].[WeightUnitMeasureCode]
+      ,[p].[Weight]
+      ,[p].[DaysToManufacture]
+      ,[p].[ProductLine]
+      ,[p].[Class]
+      ,[p].[Style]
+      ,[p].[ProductSubcategoryID]
+      ,[p].[ProductModelID]
+      ,[p].[SellStartDate]
+      ,[p].[SellEndDate]
+      ,[p].[DiscontinuedDate]
+      ,[p].[rowguid]
+      ,[p].[ModifiedDate]
+	  ,[Plph].[EndDate]
+	  ,[Plph].[ListPrice]
+	  ,[Plph].[ModifiedDate]
+	  ,[Plph].[ProductID]
+	  ,[Plph].[StartDate]
+  FROM [AdventureWorks2014].[Production].[Product] [p]
+  LEFT JOIN [AdventureWorks2014].[Production].[ProductListPriceHistory] [Plph]
+  ON [p].[ProductID] = [Plph].[ProductID]
+  WHERE [p].[ProductID] = @Id;";
+
+            Dictionary<int, ProductDto> cache = new Dictionary<int, ProductDto>();
+
+            ProductDto dto = this.connection.Query<ProductDto, ProductListPriceHistoryDto, ProductDto>(sql,
+                map:(p, Plph) =>
+                {
+                    
+
+                    if (Plph != null)
+                    {
+                        ProductDto left;
+                        if (cache.TryGetValue(p.ProductID, out left))
+                        {
+                            p = left;
+                        }
+                        else
+                        {
+                            cache[p.ProductID] = p;
+                        }
+
+                        p.ProductListPriceHistories.Add(Plph);
+                    }
+                    //p.ProductListPriceHistories = Plph;
+                    return p;
+                },
+                param: new { Id = id }, 
+                splitOn: "ProductID").FirstOrDefault();
+
+            if (dto == null)
+            {
+                throw new ArgumentException("id");
+            }
+ 
+            return dto;
+        }
+
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);

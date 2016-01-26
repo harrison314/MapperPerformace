@@ -54,6 +54,43 @@ namespace MapperPerformace.Testing
             Console.WriteLine();
         }
 
+        public void TestGetProduct(int count = 10)
+        {
+            Console.WriteLine("GetProduct");
+            foreach (IAdapter adapter in this.adapters)
+            {
+                GC.Collect();
+                this.TestGetProduct(adapter, count);
+            }
+
+            Console.WriteLine();
+        }
+
+        public void TestGetProduct(IAdapter adapter, int count)
+        {
+            int[] ids = new int[]
+            {
+                316, 317, 318, 319, 320, 321, 322, 327, 330, 331, 346, 347, 348,
+                351, 352,  724
+            };
+
+            adapter.Prepare();
+            Stopwatch stp = new Stopwatch();
+            stp.Start();
+            for (int i = 0; i < count; i++)
+            {
+                adapter.GetProduct(ids[i % ids.Length]);
+            }
+            stp.Stop();
+
+            Console.WriteLine("{0,-30} - {1,6} ms {2,6} us",
+                adapter.Name,
+                stp.ElapsedMilliseconds,
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / count, 4));
+
+            adapter.Relase();
+        }
+
         public void TestGetSimple(IAdapter adapter, int count)
         {
             adapter.Prepare();
@@ -72,7 +109,7 @@ namespace MapperPerformace.Testing
             Console.WriteLine("{0,-30} - {1,6} ms {2,6} us",
                 adapter.Name,
                 stp.ElapsedMilliseconds,
-                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / 5, 4));
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / (5 * count), 4));
 
             adapter.Relase();
         }

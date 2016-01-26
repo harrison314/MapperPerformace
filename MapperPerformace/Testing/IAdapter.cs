@@ -48,8 +48,10 @@ namespace MapperPerformace.Testing
 
         ShipMethodDto GetSimple(int id);
 
+        ProductDto GetProduct(int i);
+
         // TODO: Pridat select cez Id, na 
-        //       - objekt s dovama kolekciami entit
+        //       - objekt s dovama kolekciami entit ok
         //       - jednoduchy ojekt s vnorenym objektom
         //       - Select N+1 problem
         // http://stackoverflow.com/questions/20492071/simple-inner-join-result-with-dapper

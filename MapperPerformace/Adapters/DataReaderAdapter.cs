@@ -152,6 +152,114 @@ namespace MapperPerformace.Adapters
             throw new ArgumentException("Not found id");
         }
 
+        public ProductDto GetProduct(int id)
+        {
+
+            string sql = @"SELECT
+       [p].[ProductID]
+      ,[p].[Name]
+      ,[p].[ProductNumber]
+      ,[p].[MakeFlag]
+      ,[p].[FinishedGoodsFlag]
+      ,[p].[Color]
+      ,[p].[SafetyStockLevel]
+      ,[p].[ReorderPoint]
+      ,[p].[StandardCost]
+      ,[p].[ListPrice]
+      ,[p].[Size]
+      ,[p].[SizeUnitMeasureCode]
+      ,[p].[WeightUnitMeasureCode]
+      ,[p].[Weight]
+      ,[p].[DaysToManufacture]
+      ,[p].[ProductLine]
+      ,[p].[Class]
+      ,[p].[Style]
+      ,[p].[ProductSubcategoryID]
+      ,[p].[ProductModelID]
+      ,[p].[SellStartDate]
+      ,[p].[SellEndDate]
+      ,[p].[DiscontinuedDate]
+      ,[p].[rowguid]
+      ,[p].[ModifiedDate]
+      ,[Plph].[EndDate]
+      ,[Plph].[ListPrice]
+      ,[Plph].[ModifiedDate]
+      ,[Plph].[ProductID]
+      ,[Plph].[StartDate]
+  FROM [AdventureWorks2014].[Production].[Product] [p]
+  LEFT JOIN [AdventureWorks2014].[Production].[ProductListPriceHistory] [Plph]
+  ON [p].[ProductID] = [Plph].[ProductID]
+  WHERE [p].[ProductID] = @Id;";
+
+            SqlCommand cmd = this.connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            bool isFirst = true;
+            ProductDto productDto = new ProductDto();
+            productDto.ProductListPriceHistories = new List<ProductListPriceHistoryDto>();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    if (isFirst)
+                    {
+                        productDto.ProductID = (int)reader["ProductID"];
+                        productDto.Name = this.MapToString(reader, "Name");
+                        productDto.ProductNumber = this.MapToString(reader, "ProductNumber");
+                        productDto.MakeFlag = (bool)reader["MakeFlag"];
+                        productDto.FinishedGoodsFlag = (bool)reader["FinishedGoodsFlag"];
+                        productDto.Color = this.MapToString(reader, "Color");
+                        productDto.SafetyStockLevel = (short)reader["SafetyStockLevel"];
+                        productDto.ReorderPoint = (short)reader["ReorderPoint"];
+                        productDto.StandardCost = (decimal)reader["StandardCost"];
+                        productDto.ListPrice = (decimal)reader["ListPrice"];
+                        productDto.Size = this.MapToString(reader, "Size");
+                        productDto.SizeUnitMeasureCode = this.MapToString(reader, "SizeUnitMeasureCode");
+                        productDto.WeightUnitMeasureCode = this.MapToString(reader, "WeightUnitMeasureCode");
+                        productDto.Weight = this.MapToDecimal(reader, "Weight");
+                        productDto.DaysToManufacture = (int)reader["DaysToManufacture"];
+                        productDto.ProductLine = this.MapToString(reader, "ProductLine");
+                        productDto.Class = this.MapToString(reader, "Class");
+                        productDto.Style = this.MapToString(reader, "Style");
+                        productDto.ProductSubcategoryID = this.MapToInt(reader, "ProductSubcategoryID");
+                        productDto.ProductModelID = this.MapToInt(reader, "ProductModelID");
+                        productDto.SellStartDate = (DateTime)reader["SellStartDate"];
+                        productDto.SellEndDate = this.MapToDateTime(reader, "SellEndDate");
+                        productDto.DiscontinuedDate = this.MapToDateTime(reader, "DiscontinuedDate");
+                        productDto.rowguid = (Guid)reader["rowguid"];
+                        productDto.ModifiedDate = (DateTime)reader["ModifiedDate"];
+
+                        isFirst = false;
+                    }
+
+                    DateTime? stratDate = this.MapToDateTime(reader, "StartDate");
+                    if (stratDate.HasValue)
+                    {
+                        ProductListPriceHistoryDto productListPriceHistoryDto = new ProductListPriceHistoryDto();
+                        productListPriceHistoryDto.StartDate = stratDate.Value;
+                        productListPriceHistoryDto.EndDate = this.MapToDateTime(reader, "EndDate");
+                        productListPriceHistoryDto.ListPrice = (decimal)reader["ListPrice"];
+                        productListPriceHistoryDto.ModifiedDate = (DateTime)reader["ModifiedDate"];
+                        productListPriceHistoryDto.ProductID = (int)reader["ProductID"];
+
+                        productDto.ProductListPriceHistories.Add(productListPriceHistoryDto);
+                    }
+                }
+            }
+
+            if (isFirst)
+            {
+                throw new ArgumentException("id");
+            }
+
+            return productDto;
+        }
+
+
         public void Prepare()
         {
             this.connection = new SqlConnection(this.connectionString);
@@ -167,6 +275,28 @@ namespace MapperPerformace.Adapters
             }
 
             return (string)value;
+        }
+
+        private int? MapToInt(SqlDataReader reader, string name)
+        {
+            object value = reader[name];
+            if (value == DBNull.Value)
+            {
+                return null;
+            }
+
+            return (int?)value;
+        }
+
+        private decimal? MapToDecimal(SqlDataReader reader, string name)
+        {
+            object value = reader[name];
+            if (value == DBNull.Value)
+            {
+                return null;
+            }
+
+            return (decimal?)value;
         }
 
         private DateTime? MapToDateTime(SqlDataReader reader, string name)

@@ -28,6 +28,8 @@ namespace MapperPerformace.Adapters
             Mapper.CreateMap<EmailAddress, EmailDto>(MemberList.Destination)
                 .ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
             Mapper.CreateMap<ShipMethod, ShipMethodDto>(MemberList.Destination);
+            Mapper.CreateMap<ProductListPriceHistory, ProductListPriceHistoryDto>(MemberList.Destination);
+            Mapper.CreateMap<Product, ProductDto>(MemberList.Destination);
         }
 
         public AutoMapperAdapter()
@@ -68,6 +70,12 @@ namespace MapperPerformace.Adapters
             ShipMethodDto shipMethodDto = Mapper.Map<ShipMethod, ShipMethodDto>(shipMethodEf);
 
             return shipMethodDto;
+        }
+
+        public ProductDto GetProduct(int i)
+        {
+            ProductDto rezult = this.dbContext.Products.Where(t => t.ProductID == i).ProjectToFirst<ProductDto>();
+            return rezult;
         }
 
         public void Prepare()

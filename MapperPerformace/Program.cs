@@ -17,6 +17,8 @@ namespace MapperPerformace
 
             container.GetInstance<Tester>().TestGetAllPersons(2);
             container.GetInstance<Tester>().TestGetPaggedPersons(2);
+            container.GetInstance<Tester>().TestGetSimple(2);
+            container.GetInstance<Tester>().TestGetProduct(2);
 
 
             Console.WriteLine("------------------------------------");
@@ -35,7 +37,10 @@ namespace MapperPerformace
             container.GetInstance<Tester>().TestGetPaggedPersons(40);
             */
 
-            container.GetInstance<Tester>().TestGetSimple(40);
+            //container.GetInstance<Tester>().TestGetSimple(40);
+
+            container.GetInstance<Tester>().TestGetProduct(150);
+
 
             container.Dispose();
             Console.WriteLine();

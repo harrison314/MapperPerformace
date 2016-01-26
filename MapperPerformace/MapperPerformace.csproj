@@ -397,6 +397,7 @@
     <Compile Include="Testing\IAdapter.cs" />
     <Compile Include="Testing\PersonDto.cs" />
     <Compile Include="Testing\PersonInfoDto.cs" />
+    <Compile Include="Testing\ProductDto.cs" />
     <Compile Include="Testing\Settings.cs" />
     <Compile Include="Testing\ShipMethodDto.cs" />
     <Compile Include="Testing\Tester.cs" />
