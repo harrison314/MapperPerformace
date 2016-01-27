@@ -35,7 +35,6 @@ namespace MapperPerformace.Testing
             Console.WriteLine("GetAllPersons");
             foreach (IAdapter adapter in this.adapters)
             {
-                GC.Collect();
                 this.TestGetPaggedPersons(adapter, count);
             }
 
@@ -47,7 +46,6 @@ namespace MapperPerformace.Testing
             Console.WriteLine("GetSimple");
             foreach (IAdapter adapter in this.adapters)
             {
-                GC.Collect();
                 this.TestGetSimple(adapter, count);
             }
 
@@ -59,7 +57,6 @@ namespace MapperPerformace.Testing
             Console.WriteLine("GetProduct");
             foreach (IAdapter adapter in this.adapters)
             {
-                GC.Collect();
                 this.TestGetProduct(adapter, count);
             }
 
@@ -80,6 +77,43 @@ namespace MapperPerformace.Testing
             for (int i = 0; i < count; i++)
             {
                 adapter.GetProduct(ids[i % ids.Length]);
+            }
+            stp.Stop();
+
+            Console.WriteLine("{0,-30} - {1,6} ms {2,6} us",
+                adapter.Name,
+                stp.ElapsedMilliseconds,
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / count, 4));
+
+            adapter.Relase();
+        }
+
+        public void TestGetProduct2(int count = 10)
+        {
+            Console.WriteLine("GetProduct2");
+            foreach (IAdapter adapter in this.adapters)
+            {
+                this.TestGetProduct2(adapter, count);
+            }
+
+            Console.WriteLine();
+        }
+
+        public void TestGetProduct2(IAdapter adapter, int count)
+        {
+            int[] ids = new int[]
+            {
+                752, 928, 756, 858, 711, 788, 743, 990, 948, 769, 979, 906, 833,
+                741, 790, 776, 919, 822, 819, 976, 718, 913, 887, 751, 911, 739,
+                765, 836, 873, 967,
+            };
+
+            adapter.Prepare();
+            Stopwatch stp = new Stopwatch();
+            stp.Start();
+            for (int i = 0; i < count; i++)
+            {
+                adapter.GetProduct2(ids[i % ids.Length]);
             }
             stp.Stop();
 
@@ -145,7 +179,7 @@ namespace MapperPerformace.Testing
             stp.Start();
             for (int i = 0; i < count; i++)
             {
-                List<PersonInfoDto> infos = adapter.GetPaggedPersons((count * 10) % 10000, 5);
+                List<PersonInfoDto> infos = adapter.GetPagedPersons((count * 10) % 10000, 5);
                 mcount += infos.Count;
             }
             stp.Stop();

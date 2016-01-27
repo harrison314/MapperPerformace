@@ -30,6 +30,8 @@ namespace MapperPerformace.Adapters
             Mapper.CreateMap<ShipMethod, ShipMethodDto>(MemberList.Destination);
             Mapper.CreateMap<ProductListPriceHistory, ProductListPriceHistoryDto>(MemberList.Destination);
             Mapper.CreateMap<Product, ProductDto>(MemberList.Destination);
+            Mapper.CreateMap<ProductModel, ProductModelDto>(MemberList.Destination);
+            Mapper.CreateMap<Product, Product2Dto>(MemberList.Destination);
         }
 
         public AutoMapperAdapter()
@@ -50,7 +52,7 @@ namespace MapperPerformace.Adapters
             return rezult;
         }
 
-        public List<PersonInfoDto> GetPaggedPersons(int skip, int take)
+        public List<PersonInfoDto> GetPagedPersons(int skip, int take)
         {
             List<PersonInfoDto> rezult = this.dbContext.People.OrderBy(t => t.ModifiedDate)
                 .Skip(skip).Take(take)
@@ -76,6 +78,17 @@ namespace MapperPerformace.Adapters
         {
             ProductDto rezult = this.dbContext.Products.Where(t => t.ProductID == i).ProjectToFirst<ProductDto>();
             return rezult;
+        }
+
+        public Product2Dto GetProduct2(int id)
+        {
+            Product2Dto product = dbContext.Products.Where(t => t.ProductID == id).ProjectToFirst<Product2Dto>();
+            if (product == null)
+            {
+                throw new ArgumentException("id");
+            }
+
+            return product;
         }
 
         public void Prepare()

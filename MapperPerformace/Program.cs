@@ -39,7 +39,8 @@ namespace MapperPerformace
 
             //container.GetInstance<Tester>().TestGetSimple(40);
 
-            container.GetInstance<Tester>().TestGetProduct(150);
+           // container.GetInstance<Tester>().TestGetProduct(150);
+            container.GetInstance<Tester>().TestGetProduct2(200);
 
 
             container.Dispose();

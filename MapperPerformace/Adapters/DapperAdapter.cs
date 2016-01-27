@@ -54,7 +54,7 @@ namespace MapperPerformace.Adapters
             return projection.ToList();
         }
 
-        public List<PersonInfoDto> GetPaggedPersons(int skip, int take)
+        public List<PersonInfoDto> GetPagedPersons(int skip, int take)
         {
             string sql = @"SELECT p.[BusinessEntityID]
       ,[PersonType]
@@ -139,36 +139,95 @@ namespace MapperPerformace.Adapters
             Dictionary<int, ProductDto> cache = new Dictionary<int, ProductDto>();
 
             ProductDto dto = this.connection.Query<ProductDto, ProductListPriceHistoryDto, ProductDto>(sql,
-                map:(p, Plph) =>
-                {
-                    
+                map: (p, Plph) =>
+                 {
 
-                    if (Plph != null)
-                    {
-                        ProductDto left;
-                        if (cache.TryGetValue(p.ProductID, out left))
-                        {
-                            p = left;
-                        }
-                        else
-                        {
-                            cache[p.ProductID] = p;
-                        }
 
-                        p.ProductListPriceHistories.Add(Plph);
-                    }
+                     if (Plph != null)
+                     {
+                         ProductDto left;
+                         if (cache.TryGetValue(p.ProductID, out left))
+                         {
+                             p = left;
+                         }
+                         else
+                         {
+                             cache[p.ProductID] = p;
+                         }
+
+                         p.ProductListPriceHistories.Add(Plph);
+                     }
                     //p.ProductListPriceHistories = Plph;
                     return p;
-                },
-                param: new { Id = id }, 
+                 },
+                param: new { Id = id },
                 splitOn: "ProductID").FirstOrDefault();
 
             if (dto == null)
             {
                 throw new ArgumentException("id");
             }
- 
+
             return dto;
+        }
+
+
+        public Product2Dto GetProduct2(int id)
+        {
+            string sql = @"SELECT TOP 1
+       [p].[ProductID]
+      ,[p].[Name]
+      ,[p].[ProductNumber]
+      ,[p].[MakeFlag]
+      ,[p].[FinishedGoodsFlag]
+      ,[p].[Color]
+      ,[p].[SafetyStockLevel]
+      ,[p].[ReorderPoint]
+      ,[p].[StandardCost]
+      ,[p].[ListPrice]
+      ,[p].[Size]
+      ,[p].[SizeUnitMeasureCode]
+      ,[p].[WeightUnitMeasureCode]
+      ,[p].[Weight]
+      ,[p].[DaysToManufacture]
+      ,[p].[ProductLine]
+      ,[p].[Class]
+      ,[p].[Style]
+      ,[p].[ProductSubcategoryID]
+      ,[p].[ProductModelID]
+      ,[p].[SellStartDate]
+      ,[p].[SellEndDate]
+      ,[p].[DiscontinuedDate]
+      ,[p].[rowguid]
+      ,[p].[ModifiedDate]
+      --,[pm].[ProductModelID]
+      ,[pm].[CatalogDescription]
+	  ,[pm].[Instructions]
+	  ,[pm].[ModifiedDate]
+	  ,[pm].[Name]
+	  ,[pm].[rowguid] AS [ProductModelRowguid]
+  FROM [AdventureWorks2014].[Production].[Product] [p]
+  LEFT JOIN [AdventureWorks2014].[Production].[ProductModel] [pm]
+  ON [p].[ProductModelID] = [pm].[ProductModelID]
+  WHERE [p].[ProductID] = @Id;";
+
+            Product2Dto productDto = this.connection.Query<Product2Dto, ProductModelDto, Product2Dto>(sql,
+                (p, mp) =>
+                {
+                    p.ProductModel = mp;
+                    p.ProductModelID = mp?.ProductModelID;
+
+                    return p;
+                },
+                new { Id = id },
+                splitOn: "ProductModelID").FirstOrDefault();
+
+            if (productDto == null)
+            {
+                throw new ArgumentException("id");
+            }
+            
+            return productDto;
         }
 
         public void Prepare()

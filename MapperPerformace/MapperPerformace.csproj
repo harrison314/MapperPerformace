@@ -86,7 +86,7 @@
     <Compile Include="Adapters\AutoMapperAdapter.cs" />
     <Compile Include="Adapters\DapperAdapter.cs" />
     <Compile Include="Adapters\DataReaderAdapter.cs" />
-    <Compile Include="Adapters\UofEfAdapter.cs" />
+    <Compile Include="Adapters\UowEfAdapter.cs" />
     <Compile Include="Adapters\VanilaEfAdapter.cs" />
     <Compile Include="Ef\Address.cs">
       <DependentUpon>AdventureWorks2014.tt</DependentUpon>
@@ -397,7 +397,9 @@
     <Compile Include="Testing\IAdapter.cs" />
     <Compile Include="Testing\PersonDto.cs" />
     <Compile Include="Testing\PersonInfoDto.cs" />
+    <Compile Include="Testing\Product2Dto.cs" />
     <Compile Include="Testing\ProductDto.cs" />
+    <Compile Include="Testing\ProductModelDto.cs" />
     <Compile Include="Testing\Settings.cs" />
     <Compile Include="Testing\ShipMethodDto.cs" />
     <Compile Include="Testing\Tester.cs" />

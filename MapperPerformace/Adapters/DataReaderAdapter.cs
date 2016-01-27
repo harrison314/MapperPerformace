@@ -73,7 +73,7 @@ namespace MapperPerformace.Adapters
             return results;
         }
 
-        public List<PersonInfoDto> GetPaggedPersons(int skip, int take)
+        public List<PersonInfoDto> GetPagedPersons(int skip, int take)
         {
             string sql = @"SELECT p.[BusinessEntityID]
       ,[PersonType]
@@ -259,6 +259,108 @@ namespace MapperPerformace.Adapters
             return productDto;
         }
 
+        public Product2Dto GetProduct2(int id)
+        {
+            string sql = @"SELECT TOP 1
+       [p].[ProductID]
+      ,[p].[Name]
+      ,[p].[ProductNumber]
+      ,[p].[MakeFlag]
+      ,[p].[FinishedGoodsFlag]
+      ,[p].[Color]
+      ,[p].[SafetyStockLevel]
+      ,[p].[ReorderPoint]
+      ,[p].[StandardCost]
+      ,[p].[ListPrice]
+      ,[p].[Size]
+      ,[p].[SizeUnitMeasureCode]
+      ,[p].[WeightUnitMeasureCode]
+      ,[p].[Weight]
+      ,[p].[DaysToManufacture]
+      ,[p].[ProductLine]
+      ,[p].[Class]
+      ,[p].[Style]
+      ,[p].[ProductSubcategoryID]
+      ,[p].[ProductModelID]
+      ,[p].[SellStartDate]
+      ,[p].[SellEndDate]
+      ,[p].[DiscontinuedDate]
+      ,[p].[rowguid]
+      ,[p].[ModifiedDate]
+      ,[pm].[CatalogDescription]
+	  ,[pm].[Instructions]
+	  ,[pm].[ModifiedDate] AS [ProductModelNameModifiedDate]
+	  ,[pm].[Name] AS [ProductModelName]
+	  ,[pm].[rowguid] AS [ProductModelRowguid]
+  FROM [AdventureWorks2014].[Production].[Product] [p]
+  LEFT JOIN [AdventureWorks2014].[Production].[ProductModel] [pm]
+  ON [p].[ProductModelID] = [pm].[ProductModelID]
+  WHERE [p].[ProductID] = @Id;";
+
+            SqlCommand cmd = this.connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            bool isFirst = true;
+            Product2Dto productDto = new Product2Dto();
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    if (isFirst)
+                    {
+                        productDto.ProductID = (int)reader["ProductID"];
+                        productDto.Name = this.MapToString(reader, "Name");
+                        productDto.ProductNumber = this.MapToString(reader, "ProductNumber");
+                        productDto.MakeFlag = (bool)reader["MakeFlag"];
+                        productDto.FinishedGoodsFlag = (bool)reader["FinishedGoodsFlag"];
+                        productDto.Color = this.MapToString(reader, "Color");
+                        productDto.SafetyStockLevel = (short)reader["SafetyStockLevel"];
+                        productDto.ReorderPoint = (short)reader["ReorderPoint"];
+                        productDto.StandardCost = (decimal)reader["StandardCost"];
+                        productDto.ListPrice = (decimal)reader["ListPrice"];
+                        productDto.Size = this.MapToString(reader, "Size");
+                        productDto.SizeUnitMeasureCode = this.MapToString(reader, "SizeUnitMeasureCode");
+                        productDto.WeightUnitMeasureCode = this.MapToString(reader, "WeightUnitMeasureCode");
+                        productDto.Weight = this.MapToDecimal(reader, "Weight");
+                        productDto.DaysToManufacture = (int)reader["DaysToManufacture"];
+                        productDto.ProductLine = this.MapToString(reader, "ProductLine");
+                        productDto.Class = this.MapToString(reader, "Class");
+                        productDto.Style = this.MapToString(reader, "Style");
+                        productDto.ProductSubcategoryID = this.MapToInt(reader, "ProductSubcategoryID");
+                        productDto.ProductModelID = this.MapToInt(reader, "ProductModelID");
+                        productDto.SellStartDate = (DateTime)reader["SellStartDate"];
+                        productDto.SellEndDate = this.MapToDateTime(reader, "SellEndDate");
+                        productDto.DiscontinuedDate = this.MapToDateTime(reader, "DiscontinuedDate");
+                        productDto.rowguid = (Guid)reader["rowguid"];
+                        productDto.ModifiedDate = (DateTime)reader["ModifiedDate"];
+
+                        isFirst = false;
+                    }
+
+                    if (productDto.ProductModelID.HasValue)
+                    {
+                        productDto.ProductModel = new ProductModelDto();
+                        productDto.ProductModel.ProductModelID = productDto.ProductModelID.Value;
+                        productDto.ProductModel.CatalogDescription  = this.MapToString(reader, "CatalogDescription");
+                        productDto.ProductModel.Instructions = this.MapToString(reader, "Instructions");
+                        productDto.ProductModel.ModifiedDate = (DateTime)reader["ProductModelNameModifiedDate"];
+                        productDto.ProductModel.Name = this.MapToString(reader, "ProductModelName");
+                        productDto.ProductModel.rowguid = (Guid)reader["ProductModelRowguid"];
+                    }
+                }
+            }
+
+            if (isFirst)
+            {
+                throw new ArgumentException("id");
+            }
+
+            return productDto;
+        }
 
         public void Prepare()
         {
