@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MapperPerformace.Testing
 {
+    /// <summary>
+    /// Dto reprints <see cref="MapperPerformace.Ef.Person"/>
+    /// </summary>
     public class PersonDto
     {
         public int BusinessEntityID
@@ -68,6 +71,9 @@ namespace MapperPerformace.Testing
             set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PersonDto"/> class.
+        /// </summary>
         public PersonDto()
         {
 
