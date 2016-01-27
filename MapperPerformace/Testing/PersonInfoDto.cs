@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MapperPerformace.Testing
 {
     /// <summary>
-    /// POCO class for short personal informations.
+    /// Dto represents <see cref="MapperPerformace.Ef.Person"/>.
     /// </summary>
     public class PersonInfoDto
     {
@@ -53,6 +53,9 @@ namespace MapperPerformace.Testing
             set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PersonInfoDto"/> class.
+        /// </summary>
         public PersonInfoDto()
         {
 
