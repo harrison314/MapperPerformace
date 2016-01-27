@@ -5,7 +5,7 @@ The aim is to map the data to the data layer (database) on POCO / DTO objects.
 
 Various methods are used to test the most frequent scenarios in simpler information system.
 
-This project uses the library [Simple Injector](http://simpleinjector.readthedocs.org/en/latest/index.html) as simple IoC container for autodicover.
+This project uses the library [Simple Injector](http://simpleinjector.readthedocs.org/en/latest/index.html) as simple IoC container for autodiscover.
 
 Used mappers:
 
