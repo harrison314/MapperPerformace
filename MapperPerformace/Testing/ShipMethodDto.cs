@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 namespace MapperPerformace.Testing
 {
     /// <summary>
-    /// Find by id  1-5
+    /// Dto represents <see cref="MapperPerformace.Ef.ShipMethod"/>.
     /// </summary>
+    /// <remarks>
+    /// Find by id between 1 and 5.
+    /// </remarks>
     public class ShipMethodDto
     {
         public int ShipMethodID
@@ -47,10 +50,12 @@ namespace MapperPerformace.Testing
             set;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShipMethodDto"/> class.
+        /// </summary>
         public ShipMethodDto()
         {
 
         }
-
     }
 }
