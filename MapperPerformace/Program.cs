@@ -15,32 +15,30 @@ namespace MapperPerformace
         {
             Container container = Bootstrap();
 
-            container.GetInstance<Tester>().TestGetAllPersons(2);
-            container.GetInstance<Tester>().TestGetPaggedPersons(2);
-            container.GetInstance<Tester>().TestGetSimple(2);
-            container.GetInstance<Tester>().TestGetProduct(2);
+            container.GetInstance<PerformaceTester>().TestLoadLargeTable(2);
+            container.GetInstance<PerformaceTester>().TestLoadPagerRecords(2);
+            container.GetInstance<PerformaceTester>().TestLoadOneSimpleRow(2);
+            container.GetInstance<PerformaceTester>().TestLoadRowWithJoinedCollection(2);
 
 
             Console.WriteLine("------------------------------------");
             Console.WriteLine();
 
-            /*
-            container.GetInstance<Tester>().TestGetAllPersons(20);
-            container.GetInstance<Tester>().TestGetAllPersons(20);
-            container.GetInstance<Tester>().TestGetAllPersons(20);
-            */
+            
+            container.GetInstance<PerformaceTester>().TestLoadLargeTable(20);
+            container.GetInstance<PerformaceTester>().TestLoadLargeTable(20);
+            container.GetInstance<PerformaceTester>().TestLoadLargeTable(20);
+            
+            container.GetInstance<PerformaceTester>().TestLoadPagerRecords(40);
+            container.GetInstance<PerformaceTester>().TestLoadPagerRecords(40);
+            container.GetInstance<PerformaceTester>().TestLoadPagerRecords(40);
+            container.GetInstance<PerformaceTester>().TestLoadPagerRecords(40);
+            
 
-            /*
-            container.GetInstance<Tester>().TestGetPaggedPersons(40);
-            container.GetInstance<Tester>().TestGetPaggedPersons(40);
-            container.GetInstance<Tester>().TestGetPaggedPersons(40);
-            container.GetInstance<Tester>().TestGetPaggedPersons(40);
-            */
+            container.GetInstance<PerformaceTester>().TestLoadOneSimpleRow(40);
 
-            //container.GetInstance<Tester>().TestGetSimple(40);
-
-           // container.GetInstance<Tester>().TestGetProduct(150);
-            container.GetInstance<Tester>().TestGetProduct2(200);
+            container.GetInstance<PerformaceTester>().TestLoadRowWithJoinedCollection(150);
+            container.GetInstance<PerformaceTester>().TestLoadRowWithJoinedEntity(200);
 
 
             container.Dispose();
@@ -57,7 +55,7 @@ namespace MapperPerformace
             settings.ConnectionString = ConfigurationManager.ConnectionStrings["AdventureWorks2014"].ConnectionString;
 
             container.RegisterSingleton<Settings>(settings);
-            container.Register<Tester>(Lifestyle.Transient);
+            container.Register<PerformaceTester>(Lifestyle.Transient);
 
             container.Verify();
             AutoMapper.Mapper.AssertConfigurationIsValid();

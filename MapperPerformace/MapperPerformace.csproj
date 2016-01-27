@@ -402,7 +402,7 @@
     <Compile Include="Testing\ProductModelDto.cs" />
     <Compile Include="Testing\Settings.cs" />
     <Compile Include="Testing\ShipMethodDto.cs" />
-    <Compile Include="Testing\Tester.cs" />
+    <Compile Include="Testing\PerformaceTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

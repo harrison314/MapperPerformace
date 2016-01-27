@@ -7,20 +7,32 @@ using System.Threading.Tasks;
 
 namespace MapperPerformace.Testing
 {
-    public class Tester
+    /// <summary>
+    /// Performace tester.
+    /// </summary>
+    public class PerformaceTester
     {
         private readonly IEnumerable<IAdapter> adapters;
 
-        public Tester(IEnumerable<IAdapter> adapters)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PerformaceTester"/> class.
+        /// </summary>
+        /// <param name="adapters">The collection of adapters.</param>
+        /// <exception cref="ArgumentNullException">adapters</exception>
+        public PerformaceTester(IEnumerable<IAdapter> adapters)
         {
             if (adapters == null) throw new ArgumentNullException(nameof(adapters));
 
             this.adapters = adapters.OrderBy(t => t.Name);
         }
 
-        public void TestGetAllPersons(int count = 10)
+        /// <summary>
+        /// Tests performace of load large table with mapping to DTO object.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        public void TestLoadLargeTable(int count = 10)
         {
-            Console.WriteLine("GetAllPersons");
+            Console.WriteLine("Tests - load large table");
             foreach (IAdapter adapter in this.adapters)
             {
                 GC.Collect();
@@ -30,9 +42,13 @@ namespace MapperPerformace.Testing
             Console.WriteLine();
         }
 
-        public void TestGetPaggedPersons(int count = 10)
+        /// <summary>
+        /// Tests performace of mapping pagged results.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        public void TestLoadPagerRecords(int count = 10)
         {
-            Console.WriteLine("GetAllPersons");
+            Console.WriteLine("Test - pagged result");
             foreach (IAdapter adapter in this.adapters)
             {
                 this.TestGetPaggedPersons(adapter, count);
@@ -41,9 +57,13 @@ namespace MapperPerformace.Testing
             Console.WriteLine();
         }
 
-        public void TestGetSimple(int count = 10)
+        /// <summary>
+        /// Tests the load one simple row by Id and mapping.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        public void TestLoadOneSimpleRow(int count = 10)
         {
-            Console.WriteLine("GetSimple");
+            Console.WriteLine("Test - load one row");
             foreach (IAdapter adapter in this.adapters)
             {
                 this.TestGetSimple(adapter, count);
@@ -52,9 +72,13 @@ namespace MapperPerformace.Testing
             Console.WriteLine();
         }
 
-        public void TestGetProduct(int count = 10)
+        /// <summary>
+        /// Tests performace of load row with joined collection, and mapping.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        public void TestLoadRowWithJoinedCollection(int count = 10)
         {
-            Console.WriteLine("GetProduct");
+            Console.WriteLine("Test - Load row with joined collection");
             foreach (IAdapter adapter in this.adapters)
             {
                 this.TestGetProduct(adapter, count);
@@ -63,34 +87,13 @@ namespace MapperPerformace.Testing
             Console.WriteLine();
         }
 
-        public void TestGetProduct(IAdapter adapter, int count)
+        /// <summary>
+        /// Tests performace of load row with joined entity and mapping.
+        /// </summary>
+        /// <param name="count">The count.</param>
+        public void TestLoadRowWithJoinedEntity(int count = 10)
         {
-            int[] ids = new int[]
-            {
-                316, 317, 318, 319, 320, 321, 322, 327, 330, 331, 346, 347, 348,
-                351, 352,  724
-            };
-
-            adapter.Prepare();
-            Stopwatch stp = new Stopwatch();
-            stp.Start();
-            for (int i = 0; i < count; i++)
-            {
-                adapter.GetProduct(ids[i % ids.Length]);
-            }
-            stp.Stop();
-
-            Console.WriteLine("{0,-30} - {1,6} ms {2,6} us",
-                adapter.Name,
-                stp.ElapsedMilliseconds,
-                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / count, 4));
-
-            adapter.Relase();
-        }
-
-        public void TestGetProduct2(int count = 10)
-        {
-            Console.WriteLine("GetProduct2");
+            Console.WriteLine("Test- load row with joined entity");
             foreach (IAdapter adapter in this.adapters)
             {
                 this.TestGetProduct2(adapter, count);
@@ -99,7 +102,7 @@ namespace MapperPerformace.Testing
             Console.WriteLine();
         }
 
-        public void TestGetProduct2(IAdapter adapter, int count)
+        private void TestGetProduct2(IAdapter adapter, int count)
         {
             int[] ids = new int[]
             {
@@ -125,7 +128,32 @@ namespace MapperPerformace.Testing
             adapter.Relase();
         }
 
-        public void TestGetSimple(IAdapter adapter, int count)
+        private void TestGetProduct(IAdapter adapter, int count)
+        {
+            int[] ids = new int[]
+            {
+                316, 317, 318, 319, 320, 321, 322, 327, 330, 331, 346, 347, 348,
+                351, 352,  724
+            };
+
+            adapter.Prepare();
+            Stopwatch stp = new Stopwatch();
+            stp.Start();
+            for (int i = 0; i < count; i++)
+            {
+                adapter.GetProduct(ids[i % ids.Length]);
+            }
+            stp.Stop();
+
+            Console.WriteLine("{0,-30} - {1,6} ms {2,6} us",
+                adapter.Name,
+                stp.ElapsedMilliseconds,
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / count, 4));
+
+            adapter.Relase();
+        }
+
+        private void TestGetSimple(IAdapter adapter, int count)
         {
             adapter.Prepare();
             Stopwatch stp = new Stopwatch();
@@ -179,7 +207,7 @@ namespace MapperPerformace.Testing
             stp.Start();
             for (int i = 0; i < count; i++)
             {
-                List<PersonInfoDto> infos = adapter.GetPagedPersons((count * 10) % 10000, 5);
+                List<PersonInfoDto> infos = adapter.GetPagedPersons((count * 10) % 10000, 25);
                 mcount += infos.Count;
             }
             stp.Stop();
