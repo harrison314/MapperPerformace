@@ -35,7 +35,6 @@ namespace MapperPerformace.Testing
             Console.WriteLine("Tests - load large table");
             foreach (IAdapter adapter in this.adapters)
             {
-                GC.Collect();
                 this.TestGetAllPersons(adapter, count);
             }
 
@@ -93,13 +92,65 @@ namespace MapperPerformace.Testing
         /// <param name="count">The count.</param>
         public void TestLoadRowWithJoinedEntity(int count = 10)
         {
-            Console.WriteLine("Test- load row with joined entity");
+            Console.WriteLine("Test - load row with joined entity");
             foreach (IAdapter adapter in this.adapters)
             {
                 this.TestGetProduct2(adapter, count);
             }
 
             Console.WriteLine();
+        }
+
+        public void TestCombined(int count = 10)
+        {
+            Console.WriteLine("Test - combined all");
+            foreach (IAdapter adapter in this.adapters)
+            {
+                this.TestCombined(adapter, count);
+            }
+
+            Console.WriteLine();
+        }
+
+        private void TestCombined(IAdapter adapter, int count)
+        {
+            int[] productIds = new int[]
+            {
+                752, 928, 756, 858, 711, 788, 743, 990, 948, 769, 979, 906, 833,
+                741, 790, 776, 919, 822, 819, 976, 718, 913, 887, 751, 911, 739,
+                765, 836, 873, 967,
+            };
+
+            adapter.Prepare();
+            Stopwatch stp = new Stopwatch();
+            stp.Start();
+            for (int i = 0; i < count; i++)
+            {
+                adapter.GetPagedPersons(i * 25 + 3, 25);
+                adapter.GetSimple(2);
+                adapter.GetSimple(3);
+                adapter.GetProduct(productIds[i % productIds.Length]);
+                adapter.GetProduct2(productIds[i % productIds.Length]);
+                adapter.GetSimple(3);
+
+                adapter.GetPagedPersons(i * 25 + 3, 25);
+                adapter.GetProduct(productIds[i % productIds.Length]);
+                adapter.GetProduct2(productIds[i % productIds.Length]);
+
+                adapter.GetProduct(productIds[i % productIds.Length]);
+                adapter.GetSimple(3);
+                adapter.GetSimple(3);
+                adapter.GetProduct(productIds[i % productIds.Length]);
+
+            }
+            stp.Stop();
+
+            Console.WriteLine("{0,-30} - {1,6} ms {2,6} us",
+                adapter.Name,
+                stp.ElapsedMilliseconds,
+                Math.Round(1000.0 * stp.Elapsed.TotalMilliseconds / count, 4));
+
+            adapter.Relase();
         }
 
         private void TestGetProduct2(IAdapter adapter, int count)

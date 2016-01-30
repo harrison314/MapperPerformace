@@ -24,7 +24,7 @@ namespace MapperPerformace
             Console.WriteLine("------------------------------------");
             Console.WriteLine();
 
-            
+            /*
             container.GetInstance<PerformaceTester>().TestLoadLargeTable(20);
             container.GetInstance<PerformaceTester>().TestLoadLargeTable(20);
             container.GetInstance<PerformaceTester>().TestLoadLargeTable(20);
@@ -39,7 +39,9 @@ namespace MapperPerformace
 
             container.GetInstance<PerformaceTester>().TestLoadRowWithJoinedCollection(150);
             container.GetInstance<PerformaceTester>().TestLoadRowWithJoinedEntity(200);
+            */
 
+            container.GetInstance<PerformaceTester>().TestCombined(500);
 
             container.Dispose();
             Console.WriteLine();
