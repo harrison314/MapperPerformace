@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Adapters\AutoMapperAdapter.cs" />
     <Compile Include="Adapters\DapperAdapter.cs" />
+    <Compile Include="Adapters\DataReaderClsAdapter.cs" />
     <Compile Include="Adapters\DataReaderAdapter.cs" />
     <Compile Include="Adapters\UowEfAdapter.cs" />
     <Compile Include="Adapters\VanilaEfAdapter.cs" />

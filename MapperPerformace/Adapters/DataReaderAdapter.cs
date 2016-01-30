@@ -345,7 +345,7 @@ namespace MapperPerformace.Adapters
                     {
                         productDto.ProductModel = new ProductModelDto();
                         productDto.ProductModel.ProductModelID = productDto.ProductModelID.Value;
-                        productDto.ProductModel.CatalogDescription  = this.MapToString(reader, "CatalogDescription");
+                        productDto.ProductModel.CatalogDescription = this.MapToString(reader, "CatalogDescription");
                         productDto.ProductModel.Instructions = this.MapToString(reader, "Instructions");
                         productDto.ProductModel.ModifiedDate = (DateTime)reader["ProductModelNameModifiedDate"];
                         productDto.ProductModel.Name = this.MapToString(reader, "ProductModelName");
@@ -431,38 +431,38 @@ namespace MapperPerformace.Adapters
     /// <remarks>
     /// From https://github.com/StackExchange/dapper-dot-net/blob/4f3a04cfaabfa3a6e1cd64e23fbbcbaf63d74a8c/Dapper.Tests/PerformanceTests.cs
     /// </remarks>
-    static class SqlDataReaderHelper
-    {
-        public static string GetNullableString(this SqlDataReader reader, int index)
-        {
-            object tmp = reader.GetValue(index);
-            if (tmp != DBNull.Value)
-            {
-                return (string)tmp;
-            }
-            return null;
-        }
+    //static class SqlDataReaderHelper
+    //{
+    //    public static string GetNullableString(this SqlDataReader reader, int index)
+    //    {
+    //        object tmp = reader.GetValue(index);
+    //        if (tmp != DBNull.Value)
+    //        {
+    //            return (string)tmp;
+    //        }
+    //        return null;
+    //    }
 
-        public static Nullable<T> GetNullableValue<T>(this SqlDataReader reader, int index) where T : struct
-        {
-            object tmp = reader.GetValue(index);
-            if (tmp != DBNull.Value)
-            {
-                return (T)tmp;
-            }
+    //    public static Nullable<T> GetNullableValue<T>(this SqlDataReader reader, int index) where T : struct
+    //    {
+    //        object tmp = reader.GetValue(index);
+    //        if (tmp != DBNull.Value)
+    //        {
+    //            return (T)tmp;
+    //        }
 
-            return null;
-        }
+    //        return null;
+    //    }
 
-        public static Nullable<T> GetNullableValue<T>(this SqlDataReader reader, string name) where T : struct
-        {
-            object tmp = reader[name];
-            if (tmp != DBNull.Value)
-            {
-                return (T)tmp;
-            }
+    //    public static Nullable<T> GetNullableValue<T>(this SqlDataReader reader, string name) where T : struct
+    //    {
+    //        object tmp = reader[name];
+    //        if (tmp != DBNull.Value)
+    //        {
+    //            return (T)tmp;
+    //        }
 
-            return null;
-        }
-    }
+    //        return null;
+    //    }
+    //}
 }
