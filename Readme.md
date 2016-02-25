@@ -12,6 +12,7 @@ Used mappers:
 1. Vanila SqlDataReader
 1. [PetraPoco](http://www.toptensoftware.com/petapoco/) - in progress
 1. [Dapper](https://github.com/StackExchange/dapper-dot-net)
+1. [Massive](https://github.com/FransBouma/Massive) - in progress
 1. Entity Framework (v. 6.1.3)
 1. Entity Framework, used as Unit of Work
 1. Entity framework with [Automapper](http://automapper.org/)
