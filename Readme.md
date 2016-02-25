@@ -10,6 +10,7 @@ This project uses the library [Simple Injector](http://simpleinjector.readthedoc
 Used mappers:
 
 1. Vanila SqlDataReader
+1. [PetraPoco](http://www.toptensoftware.com/petapoco/) - in progress
 1. [Dapper](https://github.com/StackExchange/dapper-dot-net)
 1. Entity Framework (v. 6.1.3)
 1. Entity Framework, used as Unit of Work

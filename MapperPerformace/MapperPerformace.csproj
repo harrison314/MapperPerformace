@@ -61,6 +61,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Mono.Reflection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Reflection.1.0.0.0\lib\Mono.Reflection.dll</HintPath>
       <Private>True</Private>
@@ -392,6 +393,12 @@
     <Compile Include="Ef\WorkOrderRouting.cs">
       <DependentUpon>AdventureWorks2014.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Generated\Database.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\EmailDto.cs" />
@@ -414,6 +421,8 @@
     <None Include="Ef\AdventureWorks2014.edmx.diagram">
       <DependentUpon>AdventureWorks2014.edmx</DependentUpon>
     </None>
+    <None Include="Models\Generated\PetaPoco.Core.ttinclude" />
+    <None Include="Models\Generated\PetaPoco.Generator.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -426,6 +435,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>AdventureWorks2014.edmx</DependentUpon>
       <LastGenOutput>AdventureWorks2014.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Generated\Database.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Database.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
