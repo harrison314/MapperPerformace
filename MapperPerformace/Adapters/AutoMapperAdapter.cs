@@ -11,6 +11,9 @@ namespace MapperPerformace.Adapters
 {
     public class AutoMapperAdapter : IAdapter
     {
+        private static IMapper mapper = null;
+        private static object mapperSyncRoot = new object();
+
         private AdventureWorks2014Entities dbContext;
 
         public string Name
@@ -21,21 +24,32 @@ namespace MapperPerformace.Adapters
             }
         }
 
-        static AutoMapperAdapter()
+        private static void MapperConfigure(IMapperConfiguration cfd)
         {
-            Mapper.CreateMap<Person, PersonInfoDto>(MemberList.Destination)
-                .ForMember(t => t.EmployeeBrithDate, t => t.MapFrom(src => src.Employee.BirthDate));
-            Mapper.CreateMap<EmailAddress, EmailDto>(MemberList.Destination)
-                .ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
-            Mapper.CreateMap<ShipMethod, ShipMethodDto>(MemberList.Destination);
-            Mapper.CreateMap<ProductListPriceHistory, ProductListPriceHistoryDto>(MemberList.Destination);
-            Mapper.CreateMap<Product, ProductDto>(MemberList.Destination);
-            Mapper.CreateMap<ProductModel, ProductModelDto>(MemberList.Destination);
-            Mapper.CreateMap<Product, Product2Dto>(MemberList.Destination);
+            cfd.CreateMap<Person, PersonInfoDto>(MemberList.Destination).ForMember(t => t.EmployeeBrithDate, t => t.MapFrom(src => src.Employee.BirthDate));
+            cfd.CreateMap<EmailAddress, EmailDto>(MemberList.Destination).ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
+            cfd.CreateMap<ShipMethod, ShipMethodDto>(MemberList.Destination);
+            cfd.CreateMap<ProductListPriceHistory, ProductListPriceHistoryDto>(MemberList.Destination);
+            cfd.CreateMap<Product, ProductDto>(MemberList.Destination);
+            cfd.CreateMap<ProductModel, ProductModelDto>(MemberList.Destination);
+            cfd.CreateMap<Product, Product2Dto>(MemberList.Destination);
         }
 
+        private static void InitialAutomapper()
+        {
+            if(mapper == null)
+            {
+                lock(mapperSyncRoot)
+                {
+                    MapperConfiguration configuration = new MapperConfiguration(MapperConfigure);
+                    configuration.AssertConfigurationIsValid();
+                    mapper = configuration.CreateMapper();
+                }
+            }
+        }
         public AutoMapperAdapter()
         {
+            InitialAutomapper();
             this.dbContext = null;
         }
 
@@ -47,7 +61,7 @@ namespace MapperPerformace.Adapters
         public List<PersonInfoDto> GetAllPersons()
         {
             List<PersonInfoDto> rezult = this.dbContext.People.OrderBy(t => t.ModifiedDate)
-                .ProjectToList<PersonInfoDto>();
+                .ProjectToList<PersonInfoDto>(mapper.ConfigurationProvider);
 
             return rezult;
         }
@@ -56,7 +70,7 @@ namespace MapperPerformace.Adapters
         {
             List<PersonInfoDto> rezult = this.dbContext.People.OrderBy(t => t.ModifiedDate)
                 .Skip(skip).Take(take)
-                .ProjectToList<PersonInfoDto>();
+                .ProjectToList<PersonInfoDto>(mapper.ConfigurationProvider);
 
             return rezult;
         }
@@ -69,20 +83,20 @@ namespace MapperPerformace.Adapters
                 throw new ArgumentException("Not found id");
             }
 
-            ShipMethodDto shipMethodDto = Mapper.Map<ShipMethod, ShipMethodDto>(shipMethodEf);
+            ShipMethodDto shipMethodDto = mapper.Map<ShipMethod, ShipMethodDto>(shipMethodEf);
 
             return shipMethodDto;
         }
 
         public ProductDto GetProduct(int i)
         {
-            ProductDto rezult = this.dbContext.Products.Where(t => t.ProductID == i).ProjectToFirst<ProductDto>();
+            ProductDto rezult = this.dbContext.Products.Where(t => t.ProductID == i).ProjectToFirst<ProductDto>(mapper.ConfigurationProvider);
             return rezult;
         }
 
         public Product2Dto GetProduct2(int id)
         {
-            Product2Dto product = dbContext.Products.Where(t => t.ProductID == id).ProjectToFirst<Product2Dto>();
+            Product2Dto product = dbContext.Products.Where(t => t.ProductID == id).ProjectToFirst<Product2Dto>(mapper.ConfigurationProvider);
             if (product == null)
             {
                 throw new ArgumentException("id");

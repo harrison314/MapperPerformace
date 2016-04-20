@@ -60,7 +60,6 @@ namespace MapperPerformace
             container.Register<PerformaceTester>(Lifestyle.Transient);
 
             container.Verify();
-            AutoMapper.Mapper.AssertConfigurationIsValid();
 
             return container;
         }
