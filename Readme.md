@@ -20,6 +20,78 @@ Used mappers:
  1. MS SQL Server 2014 Express
  1. [ AdventureWorks Sample Database 2014](http://msftdbprodsamples.codeplex.com/)
 
+# Results
+<table border="1">
+    <thead>
+        <tr>
+            <th>/</th>
+            <th>Load large table</th>
+            <th>Pagged result</th>
+            <th>Load one row</th>
+            <th>Load row with joined collection</th>
+            <th>Combined</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dapper</td>
+            <td>174 ms</td>
+            <td>54 ms</td>
+            <td>3 ms</td>
+            <td>12 ms</td>
+            <td>30803 ms</td>
+        </tr>
+        <tr>
+            <td>Date Reader</td>
+            <td>161 ms</td>
+            <td>40 ms</td>
+            <td>1 ms</td>
+            <td>1 ms</td>
+            <td>30054 ms</td>
+        </tr>
+        <tr>
+            <td>Date Reader - closing </td>
+            <td>154 ms</td>
+            <td>48 ms</td>
+            <td>2 ms</td>
+            <td>1 ms</td>
+            <td>30672 ms</td>
+        </tr>
+        <tr>
+            <td>Entity Framework</td>
+            <td>648 ms</td>
+            <td>88 ms</td>
+            <td>24 ms</td>
+            <td>57 ms</td>
+            <td>39498 ms</td>
+        </tr>
+        <tr>
+            <td>Entity Framework - AutoMapper </td>
+            <td>166 ms</td>
+            <td>45 ms</td>
+            <td>16 ms</td>
+            <td>31 ms</td>
+            <td>35705 ms</td>
+        </tr>
+        <tr>
+            <td>Entity Framework - UoF</td>
+            <td>126 ms</td>
+            <td>44 ms</td>
+            <td>6 ms</td>
+            <td>3 ms</td>
+            <td>34842 ms</td>
+        </tr>
+        <tr>
+            <td>Tiny Mapper</td>
+            <td>2011 ms</td>
+            <td>83 ms</td>
+            <td>5 ms</td>
+            <td>18 ms</td>
+            <td>674694 ms</td>
+        </tr>
+    </tbody>
+</table>
+
 ## License
 
 **The MIT License (MIT)**
