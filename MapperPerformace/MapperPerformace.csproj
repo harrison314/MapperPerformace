@@ -81,12 +81,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TinyMapper.2.0.8\lib\net45\TinyMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\AutoMapperAdapter.cs" />
     <Compile Include="Adapters\DapperAdapter.cs" />
     <Compile Include="Adapters\DataReaderClsAdapter.cs" />
     <Compile Include="Adapters\DataReaderAdapter.cs" />
+    <Compile Include="Adapters\TinyMapperAdapter.cs" />
     <Compile Include="Adapters\UowEfAdapter.cs" />
     <Compile Include="Adapters\VanilaEfAdapter.cs" />
     <Compile Include="Ef\Address.cs">

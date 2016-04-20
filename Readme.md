@@ -14,6 +14,7 @@ Used mappers:
 1. Entity Framework (v. 6.1.3)
 1. Entity Framework, used as Unit of Work
 1. Entity framework with [Automapper](http://automapper.org/)
+1. [Tiny Mapper](http://tinymapper.net/)
 
 ## Testing datbase
  1. MS SQL Server 2014 Express
