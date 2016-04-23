@@ -15,6 +15,7 @@ Used mappers:
 1. Entity Framework, used as Unit of Work
 1. Entity framework with [Automapper](http://automapper.org/)
 1. [Tiny Mapper](http://tinymapper.net/)
+1. [Value Injector](https://www.nuget.org/packages/ValueInjecter/)
 
 ## Testing datbase
  1. MS SQL Server 2014 Express
@@ -88,6 +89,14 @@ Used mappers:
             <td>5 ms</td>
             <td>18 ms</td>
             <td>674694 ms</td>
+        </tr>
+        <tr>
+            <td>Value Injector</td>
+            <td>1995 ms</td>
+            <td>80 ms</td>
+            <td>6 ms</td>
+            <td>4 ms</td>
+            <td>636656 ms</td>
         </tr>
     </tbody>
 </table>
