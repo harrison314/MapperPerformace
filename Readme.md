@@ -101,6 +101,9 @@ Used mappers:
     </tbody>
 </table>
 
+
+For *Tiny Mapper* and *Value Injector*  results are not relevant, since in these cases need not take the valid mapping.
+
 ## License
 
 **The MIT License (MIT)**
