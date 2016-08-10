@@ -13,7 +13,7 @@ Used mappers:
 1. [Dapper](https://github.com/StackExchange/dapper-dot-net)
 1. Entity Framework (v. 6.1.3)
 1. Entity Framework, used as Unit of Work
-1. Entity framework with [Automapper](http://automapper.org/)
+1. Entity Framework with [Automapper](http://automapper.org/)
 1. [Tiny Mapper](http://tinymapper.net/)
 1. [Value Injector](https://www.nuget.org/packages/ValueInjecter/)
 
@@ -103,6 +103,15 @@ Used mappers:
 
 
 For *Tiny Mapper* and *Value Injector*  results are not relevant, since in these cases need not take the valid mapping.
+
+## Feature work
+
+Added perfmace tests for .Net Core:
+1. Vanila SqlDataReader
+1. Dapper (.Net Core version)
+1. Entity Framework Core
+1. Entity Framework Core, used as Unit of Work
+1. Entity Framework Core with [Automapper](http://automapper.org/)
 
 ## License
 
