@@ -107,6 +107,8 @@ For *Tiny Mapper* and *Value Injector*  results are not relevant, since in these
 ## Feature work
 
 Added perfmace tests for .Net Core:
+
+
 1. Vanila SqlDataReader
 1. Dapper (.Net Core version)
 1. Entity Framework Core
