@@ -24,7 +24,7 @@ namespace MapperPerformace.Adapters
             }
         }
 
-        private static void MapperConfigure(IMapperConfiguration cfd)
+        private static void MapperConfigure(IMapperConfigurationExpression cfd)
         {
             cfd.CreateMap<Person, PersonInfoDto>(MemberList.Destination).ForMember(t => t.EmployeeBrithDate, t => t.MapFrom(src => src.Employee.BirthDate));
             cfd.CreateMap<EmailAddress, EmailDto>(MemberList.Destination).ForMember(t => t.EmailAddress, t => t.MapFrom(src => src.EmailAddress1));
